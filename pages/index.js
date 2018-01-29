@@ -1,58 +1,197 @@
-import { format } from "util"
-import fetch from 'isomorphic-unfetch'
-import Head from 'next/head'
-
+import { format } from 'util';
+import fetch from 'isomorphic-unfetch';
+import Link from 'next/link';
+import Layout from '../components/layout';
 
 export default class Home extends React.Component {
-    state = {
-        username: null,
-        user: null
-    }
-    handleSubmit = e => {
-        e.preventDefault()
+	state = {
+		username: null,
+		user: null,
+	};
+	handleSubmit = e => {
+		e.preventDefault();
 
-        const {username} = this.state
+		const { username } = this.state;
 
-        fetch(`https://api.github.com/users/${username}`)
-            .then(res => res.json())
-            .then(user => this.setState({user}))
-            .catch(err => console.error(err))
-    }
-    render() {
-        const {user} = this.state
-        return (
-            <div>
-                <Head>
-                    <link rel="apple-touch-icon" sizes="57x57" href="/static/apple-icon-57x57.png" />
-                    <link rel="apple-touch-icon" sizes="60x60" href="/static/apple-icon-60x60.png" />
-                    <link rel="apple-touch-icon" sizes="72x72" href="/static/apple-icon-72x72.png" />
-                    <link rel="apple-touch-icon" sizes="76x76" href="/static/apple-icon-76x76.png" />
-                    <link rel="apple-touch-icon" sizes="114x114" href="/static/apple-icon-114x114.png" />
-                    <link rel="apple-touch-icon" sizes="120x120" href="/static/apple-icon-120x120.png" />
-                    <link rel="apple-touch-icon" sizes="144x144" href="/static/apple-icon-144x144.png" />
-                    <link rel="apple-touch-icon" sizes="152x152" href="/static/apple-icon-152x152.png" />
-                    <link rel="apple-touch-icon" sizes="180x180" href="/static/apple-icon-180x180.png" />
-                    <link rel="icon" type="image/png" sizes="192x192"  href="/static/android-icon-192x192.png" />
-                    <link rel="icon" type="image/png" sizes="32x32" href="/static/favicon-32x32.png" />
-                    <link rel="icon" type="image/png" sizes="96x96" href="/static/favicon-96x96.png" />
-                    <link rel="icon" type="image/png" sizes="16x16" href="/static/favicon-16x16.png" />
-                    <link rel="manifest" href="/static/manifest.json" />
-                    <meta name="msapplication-TileColor" content="#ffffff" />
-                    <meta name="msapplication-TileImage" content="/ms-icon-144x144.png" />
-                    <meta name="theme-color" content="#ffffff" />
-                </Head>
-                {user && (
-                    <div>
-                        <img src={user.avatar_url} alt={user.login} width={50}/>
-                        <h3>{user.name}</h3>
-                        <p>{user.company}</p>
-                    </div>
-                )}
-                <form onSubmit={this.handleSubmit}>
-                    <input type="text" placeholder="GitHub username…" onChange={e => this.setState({username: e.target.value})}/>
-                    <button type="submit">Go</button>
-                </form>
-            </div>
-        )
-    }
+		fetch(`https://api.github.com/users/${username}`)
+			.then(res => res.json())
+			.then(user => this.setState({ user }))
+			.catch(err => console.error(err));
+	};
+	render() {
+		const { user } = this.state;
+		return (
+			<Layout>
+				<main>
+					<form onSubmit={this.handleSubmit}>
+						<input
+							className="username-input"
+							type="text"
+							placeholder="Type a GitHub username and press 'enter'"
+							onChange={e => this.setState({ username: e.target.value })}
+						/>
+					</form>
+					{user && (
+						<div className="user-wrapper">
+							<div className="user-metadata">
+								<div className="user-avatar">
+									<img src={user.avatar_url} alt={user.login} width={195} />
+								</div>
+								<div className="user-bio-wrapper">
+									<div className="user-info">
+										<h3>{user.name}</h3>
+									</div>
+									<div className="user-location">{user.location}</div>
+									<div className="user-bio">{user.bio}</div>
+									<div className="user-login">
+										(<Link href={user.html_url}>
+											<a>{user.login}</a>
+										</Link>)
+									</div>
+								</div>
+							</div>
+							<div className="user-stats">
+								<div className="public-repos">
+									<span>Public Repos</span>
+									<div>{user.public_repos}</div>
+								</div>
+								<div className="public-gists">
+									<span>Public Gists</span>
+									<div>{user.public_gists}</div>
+								</div>
+								<div className="followers">
+									<span>Followers</span>
+									<div>{user.followers}</div>
+								</div>
+								<div className="following">
+									<span>Following</span>
+									<div>{user.following}</div>
+								</div>
+							</div>
+							<div className="user-contact">
+								<div className="user-email">
+									<span>email</span>
+									<Link mailto={user.email}>
+										<a>{user.email}</a>
+									</Link>
+								</div>
+								<div className="user-blog">
+									<span>blog</span>
+									<Link href={user.blog}>
+										<a>{user.blog}</a>
+									</Link>
+								</div>
+								<div className="user-company">
+									<span>company</span>
+									<p>{user.company}</p>
+								</div>
+							</div>
+							{user.hireable === true && <h3>Hire me!</h3>}
+						</div>
+					)}
+					{user === null && <p>no user</p>}
+				</main>
+				<style jsx>{`
+					form .username-input {
+						background-color: #ffffff;
+						padding: 8px 12px;
+						border: 1px solid #d2d2d2;
+						width: calc(100% - 24px);
+					}
+					.user-wrapper {
+						padding-top: 20px;
+					}
+					.user-metadata {
+						display: grid;
+						grid-template-columns: 207px auto;
+					}
+					.user-avatar {
+						padding: 6px;
+					}
+					.user-bio-wrapper {
+						padding-left: 20px;
+					}
+					.user-bio-wrapper div {
+						margin-top: 14px;
+					}
+					.user-info {
+						margin-top: 0;
+						display: flex;
+						align-items: center;
+					}
+					.user-info h3 {
+						margin: 0 22px 0 0;
+						font-family: 'ff-tisa-sans-web-pro', sans-serif;
+						font-size: 2rem;
+					}
+					.user-location {
+						background-image: url(/static/location.svg);
+						background-repeat: no-repeat;
+						background-size: contain;
+						background-position: 0 center;
+						padding-left: 30px;
+						font-size: 1.125rem;
+					}
+					.user-login {
+						color: #1194f6;
+						font-family: 'ff-tisa-sans-web-pro', sans-serif;
+						font-weight: bold;
+						font-size: 1.25rem;
+					}
+					.user-login a {
+						color: #1194f6;
+						text-decoration: none;
+					}
+					.user-bio {
+						font-size: 1.125rem;
+					}
+					.user-stats {
+						margin-top: 45px;
+						padding-bottom: 12px;
+						border-bottom: 1px solid #d2d2d2;
+						display: grid;
+						grid-template-columns: auto auto auto auto;
+					}
+					.user-stats > div {
+						display: flex;
+						flex-direction: column;
+						align-items: center;
+					}
+					.user-stats > div > span,
+					.user-contact > div > span {
+						color: #a4a4a4;
+						font-family: 'ff-tisa-sans-web-pro', sans-serif;
+						font-weight: bold;
+						font-size: 0.875rem;
+						text-transform: uppercase;
+					}
+					.user-stats > div > div {
+						color: #1194f6;
+						font-family: 'ff-tisa-sans-web-pro', sans-serif;
+						font-weight: bold;
+						font-size: 2rem;
+					}
+					.user-contact {
+						margin-top: 50px;
+						display: grid;
+						grid-template-columns: auto auto auto;
+					}
+					.user-contact > div {
+						display: flex;
+						flex-direction: column;
+						align-items: center;
+					}
+					.user-contact p {
+						margin: 6px 0 0 0;
+					}
+					.user-contact a {
+						margin: 6px 0 0 0;
+						color: #1194f6;
+						font-size: 1.125rem;
+						text-decoration: none;
+					}
+				`}</style>
+			</Layout>
+		);
+	}
 }
