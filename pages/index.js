@@ -43,7 +43,7 @@ export default class Home extends React.Component {
 											<span>Hire me!</span>
 										</div>
 									)}
-									<img src={user.avatar_url} alt={user.login} width={195} />
+									<img src={user.avatar_url} alt={user.login} />
 								</div>
 								<div className="user-bio-wrapper">
 									<div className="user-info">
@@ -196,6 +196,7 @@ export default class Home extends React.Component {
 						font-weight: bold;
 						font-size: 0.875rem;
 						text-transform: uppercase;
+						text-align: center;
 					}
 					.user-stats > div > div {
 						color: #1194f6;
@@ -221,6 +222,92 @@ export default class Home extends React.Component {
 						color: #1194f6;
 						font-size: 1.125rem;
 						text-decoration: none;
+					}
+					@media screen and (min-device-width: 375px) and (max-device-width: 812px) and (-webkit-min-device-pixel-ratio: 3) {
+						.user-metadata {
+							grid-template-columns: auto;
+						}
+						.hire-me {
+							width: 80px;
+							height: 80px;
+						}
+						.user-avatar img {
+							width: 333px;
+						}
+						.user-stats {
+							grid-template-columns: auto auto;
+						}
+						.user-stats > div > div {
+							margin-bottom: 14px;
+						}
+					}
+					@media screen and (min-device-width: 375px) and (max-device-width: 667px) and (-webkit-min-device-pixel-ratio: 2) {
+						.user-metadata {
+							grid-template-columns: auto;
+						}
+						.hire-me {
+							width: 80px;
+							height: 80px;
+						}
+						.user-avatar img {
+							width: 330px;
+						}
+						.user-stats {
+							grid-template-columns: auto auto;
+						}
+						.user-stats > div > div {
+							margin-bottom: 14px;
+						}
+					}
+					@media screen and (device-width: 360px) and (device-height: 640px) and (-webkit-device-pixel-ratio: 3) {
+						.user-metadata {
+							grid-template-columns: auto;
+						}
+						.hire-me {
+							width: 80px;
+							height: 80px;
+						}
+						.user-avatar img {
+							width: 315px;
+						}
+						.user-stats {
+							grid-template-columns: auto auto;
+						}
+						.user-stats > div > div {
+							margin-bottom: 14px;
+						}
+					}
+					@media screen and (min-device-width: 414px) and (max-device-width: 736px) and (-webkit-min-device-pixel-ratio: 3) {
+						form .username-input {
+							background-color: #ffffff;
+							padding: 8px 12px;
+							border: 1px solid #d2d2d2;
+							width: 100px;
+						}
+						.hire-me {
+							display: none;
+						}
+						.user-avatar img {
+							width: 300px;
+						}
+					}
+					@media screen and (min-device-width: 768px) and (max-device-width: 1024px) and (-webkit-min-device-pixel-ratio: 2) {
+						.user-metadata {
+							grid-template-columns: auto;
+						}
+						.hire-me {
+							width: 80px;
+							height: 80px;
+						}
+						.user-avatar img {
+							width: 315px;
+						}
+						.user-stats {
+							grid-template-columns: auto auto;
+						}
+						.user-stats > div > div {
+							margin-bottom: 14px;
+						}
 					}
 				`}</style>
 			</Layout>
