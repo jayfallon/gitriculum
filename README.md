@@ -2,6 +2,6 @@
 
 ### Simple SPA to display user info from GitHub
 
-yarn install
+npm install
 
-yarn run
+npm run dev

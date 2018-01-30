@@ -123,6 +123,9 @@ export default class Home extends React.Component {
 						display: grid;
 						grid-template-columns: 207px auto;
 					}
+					.user-avatar img {
+						width: 207px;
+					}
 					.user-avatar {
 						padding: 6px;
 						position: relative;
@@ -278,12 +281,6 @@ export default class Home extends React.Component {
 						}
 					}
 					@media screen and (min-device-width: 414px) and (max-device-width: 736px) and (-webkit-min-device-pixel-ratio: 3) {
-						form .username-input {
-							background-color: #ffffff;
-							padding: 8px 12px;
-							border: 1px solid #d2d2d2;
-							width: 100px;
-						}
 						.hire-me {
 							display: none;
 						}
@@ -307,6 +304,24 @@ export default class Home extends React.Component {
 						}
 						.user-stats > div > div {
 							margin-bottom: 14px;
+						}
+					}
+					@media screen and (min-device-width: 1200px) and (max-device-width: 1600px) and (-webkit-min-device-pixel-ratio: 1) {
+						.user-metadata {
+							display: grid;
+							grid-template-columns: 207px auto;
+						}
+						.user-avatar img {
+							width: 207px;
+						}
+					}
+					@media screen and (min-device-width: 1200px) and (max-device-width: 1600px) and (-webkit-min-device-pixel-ratio: 2) and (min-resolution: 192dpi) {
+						.user-metadata {
+							display: grid;
+							grid-template-columns: 207px auto;
+						}
+						.user-avatar img {
+							width: 207px;
 						}
 					}
 				`}</style>
