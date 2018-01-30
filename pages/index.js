@@ -2,6 +2,7 @@ import { format } from 'util';
 import fetch from 'isomorphic-unfetch';
 import Link from 'next/link';
 import Layout from '../components/layout';
+import Form from '../components/form';
 
 export default class Home extends React.Component {
 	state = {
@@ -20,6 +21,7 @@ export default class Home extends React.Component {
 	};
 	render() {
 		const { user } = this.state;
+
 		return (
 			<Layout>
 				<main>
@@ -35,6 +37,11 @@ export default class Home extends React.Component {
 						<div className="user-wrapper">
 							<div className="user-metadata">
 								<div className="user-avatar">
+									{user.hireable === true && (
+										<div className="hire-me">
+											<span>Hire me!</span>
+										</div>
+									)}
 									<img src={user.avatar_url} alt={user.login} width={195} />
 								</div>
 								<div className="user-bio-wrapper">
@@ -69,27 +76,31 @@ export default class Home extends React.Component {
 								</div>
 							</div>
 							<div className="user-contact">
-								<div className="user-email">
-									<span>email</span>
-									<Link mailto={user.email}>
-										<a>{user.email}</a>
-									</Link>
-								</div>
-								<div className="user-blog">
-									<span>blog</span>
-									<Link href={user.blog}>
-										<a>{user.blog}</a>
-									</Link>
-								</div>
-								<div className="user-company">
-									<span>company</span>
-									<p>{user.company}</p>
-								</div>
+								{user.email && (
+									<div className="user-email">
+										<span>email</span>
+										<Link href={'mailto:' + user.email}>
+											<a>{user.email}</a>
+										</Link>
+									</div>
+								)}
+								{user.blog && (
+									<div className="user-blog">
+										<span>blog</span>
+										<Link href={user.blog}>
+											<a>{user.blog}</a>
+										</Link>
+									</div>
+								)}
+								{user.company && (
+									<div className="user-company">
+										<span>company</span>
+										<p>{user.company}</p>
+									</div>
+								)}
 							</div>
-							{user.hireable === true && <h3>Hire me!</h3>}
 						</div>
 					)}
-					{user === null && <p>no user</p>}
 				</main>
 				<style jsx>{`
 					form .username-input {
@@ -107,6 +118,20 @@ export default class Home extends React.Component {
 					}
 					.user-avatar {
 						padding: 6px;
+						position: relative;
+					}
+					.hire-me {
+						background-image: url(/static/hireme.svg);
+						background-repeat: no-repeat;
+						background-size: contain;
+						width: 50px;
+						height: 50px;
+						position: absolute;
+						top: -8px;
+						right: -8px;
+					}
+					.hire-me span {
+						display: none;
 					}
 					.user-bio-wrapper {
 						padding-left: 20px;
@@ -173,8 +198,8 @@ export default class Home extends React.Component {
 					}
 					.user-contact {
 						margin-top: 50px;
-						display: grid;
-						grid-template-columns: auto auto auto;
+						display: flex;
+						justify-content: space-around;
 					}
 					.user-contact > div {
 						display: flex;
