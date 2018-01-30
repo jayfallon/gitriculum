@@ -25,11 +25,12 @@ export default class Home extends React.Component {
 		return (
 			<Layout>
 				<main>
+					{!user && <div className="no-user">Type a GitHub username below to see their profile.</div>}
 					<form onSubmit={this.handleSubmit}>
 						<input
 							className="username-input"
 							type="text"
-							placeholder="Type a GitHub username and press 'enter'"
+							placeholder="Search"
 							onChange={e => this.setState({ username: e.target.value })}
 						/>
 					</form>
@@ -108,6 +109,12 @@ export default class Home extends React.Component {
 						padding: 8px 12px;
 						border: 1px solid #d2d2d2;
 						width: calc(100% - 24px);
+					}
+					.no-user {
+						padding: 12px;
+						color: #4a4a4a;
+						font-size: 1.55rem;
+						text-align: center;
 					}
 					.user-wrapper {
 						padding-top: 20px;
