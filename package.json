@@ -1,20 +1,24 @@
 {
-	"name": "gitresume",
-	"version": "1.0.0",
-	"description": "a resume getter for GitHub",
-	"main": "index.js",
-	"author": "<jayfallon@gmail.com> (http://jayfallon.net)",
-	"license": "MIT",
-	"dependencies": {
-		"isomorphic-unfetch": "^2.0.0",
-		"next": "^4.2.3",
-		"react": "^16.2.0",
-		"react-dom": "^16.2.0"
-	},
-	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1",
-		"dev": "next",
-		"build": "next build",
-		"start": "next start"
-	}
+  "name": "gitresume",
+  "version": "1.0.0",
+  "description": "a resume getter for GitHub",
+  "main": "index.js",
+  "author": "<jayfallon@gmail.com> (http://jayfallon.net)",
+  "license": "MIT",
+  "dependencies": {
+    "isomorphic-unfetch": "^2.0.0",
+    "next": "^4.2.3",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.1",
+    "snyk": "^1.108.2"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "next",
+    "build": "next build",
+    "start": "next start",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
+  },
+  "snyk": true
 }
